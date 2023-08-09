@@ -23,7 +23,21 @@ namespace JoshuaRea_SchedulingApplication
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            User.FindUser(txtUserName.Text, txtPassword.Text);
+            bool foundUser = User.FindUser(txtUserName.Text, txtPassword.Text);
+
+            if (foundUser == true)
+            {
+
+            }
+            else
+            {
+                MessageBox.Show("Username and Password do not match.");
+            }
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

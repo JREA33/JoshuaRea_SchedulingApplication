@@ -29,24 +29,22 @@ namespace JoshuaRea_SchedulingApplication
         }
 
         //Methods
-        public static void FindUser(string userName, string password)
+        public static bool FindUser(string userName, string password)
         {
             MySqlConnection c = DBConnection.conn;
             string sqlString = $"SELECT * FROM user WHERE userName = '{userName}' AND password = '{password}'";
             MySqlCommand cmd = new MySqlCommand(sqlString, c);
             MySqlDataReader readRows = cmd.ExecuteReader();
-            
+
             if (readRows.HasRows == false)
             {
-                MessageBox.Show("Username and Password do not match.");
                 readRows.Close();
+                return false;
             }
             else
             {
-                readRows.Read();
-                userName = readRows[1].ToString();
-                password = readRows[2].ToString();
                 readRows.Close();
+                return true;
             }
         }
     }

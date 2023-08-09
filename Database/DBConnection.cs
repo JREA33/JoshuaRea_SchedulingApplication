@@ -23,7 +23,6 @@ namespace JoshuaRea_SchedulingApplication.Database
                 //Open the connection
                 conn.Open();
 
-                MessageBox.Show("Connection is Open.");
             }
             catch (MySqlException ex)
             {

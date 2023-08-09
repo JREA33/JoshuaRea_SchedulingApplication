@@ -18,37 +18,5 @@ namespace JoshuaRea_SchedulingApplication
         {
             InitializeComponent();
         }
-
-        private void btnConnect_Click(object sender, EventArgs e)
-        {
-            //Get the connection string.
-            string constr = ConfigurationManager.ConnectionStrings["localdb"].ConnectionString;
-
-            //Make the connection.
-            MySqlConnection conn = null;
-
-            //Open the connection
-            try
-            {
-                conn = new MySqlConnection(constr);
-
-                //Open the connection
-                conn.Open();
-
-                MessageBox.Show("Connection is Open.");
-            }
-            catch(MySqlException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                //Close the connection
-                if(conn!= null)
-                {
-                    conn.Close();
-                }
-            }
-        }
     }
 }

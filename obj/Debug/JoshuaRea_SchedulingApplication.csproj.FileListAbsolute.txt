@@ -40,3 +40,4 @@ C:\Users\LabUser\Desktop\JoshuaRea_SchedulingApplication\obj\Debug\JoshuaRea_Sch
 C:\Users\LabUser\Desktop\JoshuaRea_SchedulingApplication\obj\Debug\JoshuaRea_SchedulingApplication.csproj.CopyComplete
 C:\Users\LabUser\Desktop\JoshuaRea_SchedulingApplication\obj\Debug\JoshuaRea_SchedulingApplication.exe
 C:\Users\LabUser\Desktop\JoshuaRea_SchedulingApplication\obj\Debug\JoshuaRea_SchedulingApplication.pdb
+C:\Users\LabUser\Desktop\JoshuaRea_SchedulingApplication\obj\Debug\JoshuaRea_SchedulingApplication.Main.resources

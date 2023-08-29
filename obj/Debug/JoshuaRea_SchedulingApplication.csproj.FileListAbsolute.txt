@@ -41,3 +41,5 @@ C:\Users\LabUser\Desktop\JoshuaRea_SchedulingApplication\obj\Debug\JoshuaRea_Sch
 C:\Users\LabUser\Desktop\JoshuaRea_SchedulingApplication\obj\Debug\JoshuaRea_SchedulingApplication.exe
 C:\Users\LabUser\Desktop\JoshuaRea_SchedulingApplication\obj\Debug\JoshuaRea_SchedulingApplication.pdb
 C:\Users\LabUser\Desktop\JoshuaRea_SchedulingApplication\obj\Debug\JoshuaRea_SchedulingApplication.Main.resources
+C:\Users\LabUser\Desktop\JoshuaRea_SchedulingApplication\obj\Debug\JoshuaRea_SchedulingApplication.AddCustomer.resources
+C:\Users\LabUser\Desktop\JoshuaRea_SchedulingApplication\obj\Debug\JoshuaRea_SchedulingApplication.Forms.UpdateCustomer.resources

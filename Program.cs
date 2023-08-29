@@ -15,13 +15,16 @@ namespace JoshuaRea_SchedulingApplication
         /// </summary>
         [STAThread]
         static void Main()
-        {
+        { 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            //Start and End Database Connection
 
             DBConnection.startConnection();
             Application.Run(new Login());
             DBConnection.closeConnection();
         }
+        
     }
 }

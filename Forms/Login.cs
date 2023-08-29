@@ -17,17 +17,19 @@ namespace JoshuaRea_SchedulingApplication
     public partial class Login : Form
     {
         string loginError = "Username and Password do not match.";
+        public static string currentUsername;
         public Login()
         {
             InitializeComponent();
-            MySqlConnection c = DBConnection.conn;
+
+            //CultureInfo.CurrentCulture = new CultureInfo("es");
 
             setLanguage();
         }
 
         private void setLanguage()
         {
-            if (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "es")
+            if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "es")
             {
                 lblLogin.Text = "Acceso";
                 lblUsername.Text = "Nombre de Usuario";

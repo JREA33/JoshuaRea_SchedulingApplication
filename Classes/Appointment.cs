@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JoshuaRea_SchedulingApplication.Database;
+using MySql.Data.MySqlClient;
 
 namespace JoshuaRea_SchedulingApplication
 {
@@ -36,6 +38,11 @@ namespace JoshuaRea_SchedulingApplication
         {
             get => customerId;
             set => customerId = value;
+        }
+        public int UserId
+        {
+            get => userId;
+            set => userId = value;
         }
         public string Title
         {
@@ -101,7 +108,7 @@ namespace JoshuaRea_SchedulingApplication
         //Setup Constructors
 
         public Appointment() { }
-        public Appointment(int appointmentId, int customerId, int userId, string title, string description, string location, string contact, string type, string url, DateTime start, DateTime end, DateTime createDate, string createdBy, DateTime lastUpdate, string lastUpdatedBy)
+        public Appointment(int appointmentId, int customerId, int userId, string title, string description, string location, string contact, string type, string url, DateTime start, DateTime end)
         {
             this.appointmentId = appointmentId;
             this.customerId = customerId;
@@ -114,10 +121,94 @@ namespace JoshuaRea_SchedulingApplication
             this.url = url;
             this.start = start;
             this.end = end;
-            this.createDate = createDate;
-            this.createdBy = createdBy;
-            this.lastUpdate = lastUpdate;
-            this.lastUpdatedBy = lastUpdatedBy;
+        }
+
+        public static Appointment GetAppointment(int appointmentID)
+        {
+            string query = $"SELECT * FROM appointment WHERE appointmentId = '{appointmentID}'";
+
+            Appointment appointment = new Appointment();
+
+            MySqlCommand cmd = new MySqlCommand(query, DBConnection.conn);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                appointment.appointmentId = Convert.ToInt32(rdr["appointmentId"]);
+                appointment.customerId = Convert.ToInt32(rdr["customerId"]);
+                appointment.userId = Convert.ToInt32(rdr["userId"]);
+                appointment.title = rdr["title"].ToString();
+                appointment.description = rdr["description"].ToString();
+                appointment.location = rdr["location"].ToString();
+                appointment.contact = rdr["contact"].ToString();
+                appointment.type = rdr["type"].ToString();
+                appointment.url = rdr["url"].ToString();
+                appointment.start = Convert.ToDateTime(rdr["start"]);
+                appointment.end = Convert.ToDateTime(rdr["end"]);
+                appointment.createDate = Convert.ToDateTime(rdr["createDate"]);
+                appointment.createdBy = rdr["createdBy"].ToString();
+                appointment.lastUpdate = Convert.ToDateTime(rdr["lastUpdate"]);
+                appointment.LastUpdatedBy = rdr["lastUpdateBy"].ToString();
+
+            }
+
+            rdr.Close();
+
+            return appointment;
+        }
+
+        public static int GetNewAppointmentID()
+        {
+            int newId = 0;
+
+            string query = "SELECT MAX(appointmentId) AS 'newId' FROM appointment";
+
+            MySqlCommand cmd = new MySqlCommand(query, DBConnection.conn);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                newId = Convert.ToInt32(rdr["newId"]) + 1;
+            }
+            rdr.Close();
+
+            return newId;
+        }
+
+        public static void CreateAppointment(Appointment newAppointment)
+        {
+            string currentTimestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            string queryString = "INSERT INTO appointment " +
+                $"VALUES ('{newAppointment.appointmentId}', '{newAppointment.customerId}', '{newAppointment.userId}', '{newAppointment.title}', '{newAppointment.description}', '{newAppointment.location}', '{newAppointment.contact}', '{newAppointment.type}', '{newAppointment.URL}', '{newAppointment.start.ToString("yyyy-MM-dd HH:mm:ss")}', '{newAppointment.end.ToString("yyyy-MM-dd HH:mm:ss")}', '{currentTimestamp}', '{Login.currentUsername}', '{currentTimestamp}', '{Login.currentUsername}')";
+            MySqlCommand cmd2 = new MySqlCommand(queryString, DBConnection.conn);
+            cmd2.ExecuteNonQuery();
+        }
+
+        public static void DeleteAppointment(int appointmentID)
+        {
+            string query = $"DELETE FROM appointment WHERE appointmentId = '{appointmentID}'";
+
+            MySqlCommand cmd = new MySqlCommand(query, DBConnection.conn);
+            cmd.ExecuteNonQuery();
+        }
+
+        public static void UpdateAppointment(Appointment appointment)
+        {
+            string query = "UPDATE appointment " +
+                "SET " +
+                $"customerId = '{appointment.customerId}', " +
+                $"userId = '{appointment.userId}', " +
+                $"title = '{appointment.title}', " +
+                $"description = '{appointment.description}', " +
+                $"location = '{appointment.location}', " +
+                $"contact = '{appointment.contact}', " +
+                $"type = '{appointment.type}', " +
+                $"url = '{appointment.url}', " +
+                $"start = '{appointment.start}', " +
+                $"end = '{appointment.end}', " +
+                $"lastUpdate = '{appointment.lastUpdate.ToString("yyyy-MM-dd HH:mm:ss")}', " +
+                $"lastUpdateBy = '{Login.currentUsername}'" +
+                $"WHERE appointmentId = '{appointment.appointmentId}';";
         }
     }
 }

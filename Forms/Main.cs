@@ -116,6 +116,13 @@ namespace JoshuaRea_SchedulingApplication
             dgvCustomers.DataSource = getCustomers();
         }
 
+        public void RefreshAppointments()
+        {
+            appointmentData.Clear();
+            dgvAppointments.DataSource = getAllAppointments();
+            rbAllAppointments.Checked = true;
+        }
+
         private void btnUpdateCustomer_Click(object sender, EventArgs e)
         {
             int currentCustomerId = Convert.ToInt32(dgvCustomers.CurrentRow.Cells[0].Value);
@@ -146,6 +153,23 @@ namespace JoshuaRea_SchedulingApplication
         {
             appointmentData.Clear();
             dgvAppointments.DataSource = getWeeksAppointments();
+        }
+
+        private void btnAddAppointment_Click(object sender, EventArgs e)
+        {
+            new AddAppointment().ShowDialog();
+        }
+
+        private void btnDeleteAppointment_Click(object sender, EventArgs e)
+        {
+            Appointment.DeleteAppointment(Convert.ToInt32(dgvAppointments.CurrentRow.Cells["appointmentId"].Value));
+            RefreshAppointments();
+        }
+
+        private void btnUpdateAppointment_Click(object sender, EventArgs e)
+        {
+            Appointment appointment = Appointment.GetAppointment(Convert.ToInt32(dgvAppointments.CurrentRow.Cells["appointmentId"].Value));
+            new UpdateAppointment(appointment).ShowDialog();
         }
     }
 }

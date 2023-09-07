@@ -35,10 +35,13 @@ namespace JoshuaRea_SchedulingApplication
             this.btnDeleteCustomer = new System.Windows.Forms.Button();
             this.btnAddCustomer = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.dgvAppointments = new System.Windows.Forms.DataGridView();
-            this.rbAllAppointments = new System.Windows.Forms.RadioButton();
-            this.rbMonth = new System.Windows.Forms.RadioButton();
+            this.btnUpdateAppointment = new System.Windows.Forms.Button();
+            this.btnDeleteAppointment = new System.Windows.Forms.Button();
+            this.btnAddAppointment = new System.Windows.Forms.Button();
             this.rbWeek = new System.Windows.Forms.RadioButton();
+            this.rbMonth = new System.Windows.Forms.RadioButton();
+            this.rbAllAppointments = new System.Windows.Forms.RadioButton();
+            this.dgvAppointments = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -108,6 +111,9 @@ namespace JoshuaRea_SchedulingApplication
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btnUpdateAppointment);
+            this.groupBox2.Controls.Add(this.btnDeleteAppointment);
+            this.groupBox2.Controls.Add(this.btnAddAppointment);
             this.groupBox2.Controls.Add(this.rbWeek);
             this.groupBox2.Controls.Add(this.rbMonth);
             this.groupBox2.Controls.Add(this.rbAllAppointments);
@@ -120,17 +126,62 @@ namespace JoshuaRea_SchedulingApplication
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Appointments";
             // 
-            // dgvAppointments
+            // btnUpdateAppointment
             // 
-            this.dgvAppointments.AllowUserToAddRows = false;
-            this.dgvAppointments.AllowUserToDeleteRows = false;
-            this.dgvAppointments.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
-            this.dgvAppointments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAppointments.Location = new System.Drawing.Point(6, 48);
-            this.dgvAppointments.Name = "dgvAppointments";
-            this.dgvAppointments.ReadOnly = true;
-            this.dgvAppointments.Size = new System.Drawing.Size(1113, 216);
-            this.dgvAppointments.TabIndex = 0;
+            this.btnUpdateAppointment.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUpdateAppointment.Location = new System.Drawing.Point(128, 270);
+            this.btnUpdateAppointment.Name = "btnUpdateAppointment";
+            this.btnUpdateAppointment.Size = new System.Drawing.Size(116, 37);
+            this.btnUpdateAppointment.TabIndex = 6;
+            this.btnUpdateAppointment.Text = "Update";
+            this.btnUpdateAppointment.UseVisualStyleBackColor = true;
+            this.btnUpdateAppointment.Click += new System.EventHandler(this.btnUpdateAppointment_Click);
+            // 
+            // btnDeleteAppointment
+            // 
+            this.btnDeleteAppointment.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDeleteAppointment.Location = new System.Drawing.Point(250, 270);
+            this.btnDeleteAppointment.Name = "btnDeleteAppointment";
+            this.btnDeleteAppointment.Size = new System.Drawing.Size(116, 37);
+            this.btnDeleteAppointment.TabIndex = 5;
+            this.btnDeleteAppointment.Text = "Delete";
+            this.btnDeleteAppointment.UseVisualStyleBackColor = true;
+            this.btnDeleteAppointment.Click += new System.EventHandler(this.btnDeleteAppointment_Click);
+            // 
+            // btnAddAppointment
+            // 
+            this.btnAddAppointment.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddAppointment.Location = new System.Drawing.Point(6, 270);
+            this.btnAddAppointment.Name = "btnAddAppointment";
+            this.btnAddAppointment.Size = new System.Drawing.Size(116, 37);
+            this.btnAddAppointment.TabIndex = 4;
+            this.btnAddAppointment.Text = "Add";
+            this.btnAddAppointment.UseVisualStyleBackColor = true;
+            this.btnAddAppointment.Click += new System.EventHandler(this.btnAddAppointment_Click);
+            // 
+            // rbWeek
+            // 
+            this.rbWeek.AutoSize = true;
+            this.rbWeek.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbWeek.Location = new System.Drawing.Point(1051, 14);
+            this.rbWeek.Name = "rbWeek";
+            this.rbWeek.Size = new System.Drawing.Size(68, 24);
+            this.rbWeek.TabIndex = 3;
+            this.rbWeek.Text = "Week";
+            this.rbWeek.UseVisualStyleBackColor = true;
+            this.rbWeek.CheckedChanged += new System.EventHandler(this.rbWeek_CheckedChanged);
+            // 
+            // rbMonth
+            // 
+            this.rbMonth.AutoSize = true;
+            this.rbMonth.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbMonth.Location = new System.Drawing.Point(973, 14);
+            this.rbMonth.Name = "rbMonth";
+            this.rbMonth.Size = new System.Drawing.Size(72, 24);
+            this.rbMonth.TabIndex = 2;
+            this.rbMonth.Text = "Month";
+            this.rbMonth.UseVisualStyleBackColor = true;
+            this.rbMonth.CheckedChanged += new System.EventHandler(this.rbMonth_CheckedChanged);
             // 
             // rbAllAppointments
             // 
@@ -146,29 +197,18 @@ namespace JoshuaRea_SchedulingApplication
             this.rbAllAppointments.UseVisualStyleBackColor = true;
             this.rbAllAppointments.CheckedChanged += new System.EventHandler(this.rbAllAppointments_CheckedChanged);
             // 
-            // rbMonth
+            // dgvAppointments
             // 
-            this.rbMonth.AutoSize = true;
-            this.rbMonth.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbMonth.Location = new System.Drawing.Point(973, 14);
-            this.rbMonth.Name = "rbMonth";
-            this.rbMonth.Size = new System.Drawing.Size(72, 24);
-            this.rbMonth.TabIndex = 2;
-            this.rbMonth.Text = "Month";
-            this.rbMonth.UseVisualStyleBackColor = true;
-            this.rbMonth.CheckedChanged += new System.EventHandler(this.rbMonth_CheckedChanged);
-            // 
-            // rbWeek
-            // 
-            this.rbWeek.AutoSize = true;
-            this.rbWeek.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbWeek.Location = new System.Drawing.Point(1051, 14);
-            this.rbWeek.Name = "rbWeek";
-            this.rbWeek.Size = new System.Drawing.Size(68, 24);
-            this.rbWeek.TabIndex = 3;
-            this.rbWeek.Text = "Week";
-            this.rbWeek.UseVisualStyleBackColor = true;
-            this.rbWeek.CheckedChanged += new System.EventHandler(this.rbWeek_CheckedChanged);
+            this.dgvAppointments.AllowUserToAddRows = false;
+            this.dgvAppointments.AllowUserToDeleteRows = false;
+            this.dgvAppointments.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
+            this.dgvAppointments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAppointments.Location = new System.Drawing.Point(6, 48);
+            this.dgvAppointments.Name = "dgvAppointments";
+            this.dgvAppointments.ReadOnly = true;
+            this.dgvAppointments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvAppointments.Size = new System.Drawing.Size(1113, 216);
+            this.dgvAppointments.TabIndex = 0;
             // 
             // Main
             // 
@@ -200,5 +240,8 @@ namespace JoshuaRea_SchedulingApplication
         private System.Windows.Forms.RadioButton rbWeek;
         private System.Windows.Forms.RadioButton rbMonth;
         private System.Windows.Forms.RadioButton rbAllAppointments;
+        private System.Windows.Forms.Button btnUpdateAppointment;
+        private System.Windows.Forms.Button btnDeleteAppointment;
+        private System.Windows.Forms.Button btnAddAppointment;
     }
 }

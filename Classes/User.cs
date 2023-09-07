@@ -86,5 +86,30 @@ namespace JoshuaRea_SchedulingApplication
                 return true;
             }
         }
+
+        public static User GetUser(int userId)
+        {
+            User user = new User();
+
+            string query = $"SELECT * FROM user WHERE userId = '{userId}'";
+
+            MySqlCommand cmd = new MySqlCommand(query, DBConnection.conn);
+
+            MySqlDataReader rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                user.userId = Convert.ToInt32(rdr["userId"]);
+                user.userName = rdr["userName"].ToString();
+                user.password = rdr["password"].ToString();
+                user.active = Convert.ToInt32(rdr["active"]);
+                user.createDate = Convert.ToDateTime(rdr["createDate"]);
+                user.createdBy = rdr["createdBy"].ToString();
+                user.lastUpdate = Convert.ToDateTime(rdr["lastUpdate"]);
+                user.lastUpdatedBy = rdr["lastUpdateBy"].ToString();
+            }
+
+            return user;
+        }
     }
 }

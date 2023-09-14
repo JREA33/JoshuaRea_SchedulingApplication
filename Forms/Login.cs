@@ -27,6 +27,8 @@ namespace JoshuaRea_SchedulingApplication
             setLanguage();
         }
 
+        //Method to change the language according to the language set in Windows.
+
         private void setLanguage()
         {
             if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName == "es")
@@ -40,6 +42,9 @@ namespace JoshuaRea_SchedulingApplication
                 loginError = "Nombre de usuario y contrasena no coincidem.";
             }
         }
+
+        //Click of the login button
+
         private void btnLogin_Click(object sender, EventArgs e)
         {
             bool foundUser = User.FindUser(txtUserName.Text, txtPassword.Text);
@@ -55,6 +60,8 @@ namespace JoshuaRea_SchedulingApplication
             MessageBox.Show(loginError);
             }
         }
+
+        //Exit Button Click
 
         private void btnExit_Click(object sender, EventArgs e)
         {

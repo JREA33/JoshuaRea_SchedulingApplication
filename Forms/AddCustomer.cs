@@ -51,6 +51,38 @@ namespace JoshuaRea_SchedulingApplication
             }
         }
 
+        //Check Change on Textboxes
+
+        private void txtCustomerName_TextChanged(object sender, EventArgs e)
+        {
+            BtnSaveDisable();
+        }
+
+        private void txtAddress_TextChanged(object sender, EventArgs e)
+        {
+            BtnSaveDisable();
+        }
+
+        private void txtCity_TextChanged(object sender, EventArgs e)
+        {
+            BtnSaveDisable();
+        }
+
+        private void txtCountry_TextChanged(object sender, EventArgs e)
+        {
+            BtnSaveDisable();
+        }
+
+        private void txtPostalCode_TextChanged(object sender, EventArgs e)
+        {
+            BtnSaveDisable();
+        }
+
+        private void txtPhone_TextChanged(object sender, EventArgs e)
+        {
+            BtnSaveDisable();
+        }
+
         //Method for when Save button is clicked
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -105,36 +137,9 @@ namespace JoshuaRea_SchedulingApplication
             
         }
 
-        //Check Change on Textboxes
-
-        private void txtCustomerName_TextChanged(object sender, EventArgs e)
+        private void btnCancel_Click(object sender, EventArgs e)
         {
-            BtnSaveDisable();
-        }
-
-        private void txtAddress_TextChanged(object sender, EventArgs e)
-        {
-            BtnSaveDisable();
-        }
-
-        private void txtCity_TextChanged(object sender, EventArgs e)
-        {
-            BtnSaveDisable();
-        }
-
-        private void txtCountry_TextChanged(object sender, EventArgs e)
-        {
-            BtnSaveDisable();
-        }
-
-        private void txtPostalCode_TextChanged(object sender, EventArgs e)
-        {
-            BtnSaveDisable();
-        }
-
-        private void txtPhone_TextChanged(object sender, EventArgs e)
-        {
-            BtnSaveDisable();
+            this.Close();
         }
     }
 }

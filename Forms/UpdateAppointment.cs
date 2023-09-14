@@ -36,6 +36,8 @@ namespace JoshuaRea_SchedulingApplication.Forms
             MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
             adp.Fill(users);
 
+            
+
             foreach (DataRow row in users.Rows)
             {
                 cmbUsers.Items.Add(row["userName"].ToString());
@@ -45,7 +47,7 @@ namespace JoshuaRea_SchedulingApplication.Forms
             txtAppointmentID.Text = appointment.AppointmentId.ToString();
             Customer customer = Customer.GetCustomer(appointment.CustomerId);
             cmbCustomer.Text = customer.CustomerName;
-            User user = User.GetUser(appointment.AppointmentId);
+            User user = User.GetUser(appointment.UserId);
             cmbUsers.Text = user.UserName;
             txtTitle.Text = appointment.Title;
             txtDescription.Text = appointment.Description;
@@ -57,9 +59,57 @@ namespace JoshuaRea_SchedulingApplication.Forms
             dateEnd.Value = appointment.End;
         }
 
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
-            
+            Appointment updatedAppointment = new Appointment();
+
+            //Set data for new appointment
+
+            updatedAppointment.AppointmentId = Convert.ToInt32(txtAppointmentID.Text);
+
+            string query = $"SELECT customerId FROM customer WHERE customerName = '{cmbCustomer.Text}'";
+            MySqlCommand cmd = new MySqlCommand(query, DBConnection.conn);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                updatedAppointment.CustomerId = Convert.ToInt32(rdr["customerId"]);
+            }
+
+            rdr.Close();
+
+            string query2 = $"SELECT userId FROM user WHERE userName = '{cmbUsers.Text}'";
+            MySqlCommand cmd2 = new MySqlCommand(query2, DBConnection.conn);
+            MySqlDataReader rdr2 = cmd2.ExecuteReader();
+
+            while (rdr2.Read())
+            {
+                updatedAppointment.UserId = Convert.ToInt32(rdr2["userId"]);
+            }
+
+            rdr2.Close();
+
+            updatedAppointment.Title = txtTitle.Text;
+            updatedAppointment.Description = txtDescription.Text;
+            updatedAppointment.Location = txtLocation.Text;
+            updatedAppointment.Contact = txtContact.Text;
+            updatedAppointment.Type = txtType.Text;
+            updatedAppointment.URL = txtURL.Text;
+            updatedAppointment.Start = dateStart.Value;
+            updatedAppointment.End = dateEnd.Value;
+
+            //Update appointment in database
+
+            Appointment.UpdateAppointment(updatedAppointment);
+
+            main.RefreshAppointments();
+
+            this.Close();
         }
     }
 }

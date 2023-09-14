@@ -104,7 +104,7 @@ namespace JoshuaRea_SchedulingApplication.Classes
             rdr.Close();
             if (countryExists == false)
             {
-                string currentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                string currentDateTime = DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss");
 
                 GetNewCountryID(updatedCountry);
 
@@ -128,9 +128,9 @@ namespace JoshuaRea_SchedulingApplication.Classes
             {
                 country.countryId = Convert.ToInt32(rdr["countryId"]);
                 country.country = rdr["country"].ToString();
-                country.createDate = Convert.ToDateTime(rdr["createDate"]);
+                country.createDate = Convert.ToDateTime(rdr["createDate"]).ToLocalTime();
                 country.createdBy = rdr["createdBy"].ToString();
-                country.lastUpdate = Convert.ToDateTime(rdr["lastUpdate"]);
+                country.lastUpdate = Convert.ToDateTime(rdr["lastUpdate"]).ToLocalTime();
                 country.lastUpdatedBy = rdr["lastUpdateBy"].ToString();
             }
             rdr.Close();

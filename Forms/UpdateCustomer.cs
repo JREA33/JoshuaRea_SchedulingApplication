@@ -17,6 +17,8 @@ namespace JoshuaRea_SchedulingApplication.Forms
 
         Main main = (Main)Application.OpenForms["Main"];
 
+        //Constructors
+
         public UpdateCustomer()
         {
             InitializeComponent();
@@ -36,10 +38,7 @@ namespace JoshuaRea_SchedulingApplication.Forms
             txtPhone.Text = address.Phone;
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
+        //Save Button
 
         private void btnSave_Click(object sender, EventArgs e)
         {
@@ -65,6 +64,13 @@ namespace JoshuaRea_SchedulingApplication.Forms
             Customer.UpdateCustomer(customer);
 
             main.RefreshCustomerGrid();
+            this.Close();
+        }
+
+        //Cancel Button
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
             this.Close();
         }
     }

@@ -143,11 +143,11 @@ namespace JoshuaRea_SchedulingApplication
                 appointment.contact = rdr["contact"].ToString();
                 appointment.type = rdr["type"].ToString();
                 appointment.url = rdr["url"].ToString();
-                appointment.start = Convert.ToDateTime(rdr["start"]);
-                appointment.end = Convert.ToDateTime(rdr["end"]);
-                appointment.createDate = Convert.ToDateTime(rdr["createDate"]);
+                appointment.start = Convert.ToDateTime(rdr["start"]).ToLocalTime();
+                appointment.end = Convert.ToDateTime(rdr["end"]).ToLocalTime();
+                appointment.createDate = Convert.ToDateTime(rdr["createDate"]).ToLocalTime();
                 appointment.createdBy = rdr["createdBy"].ToString();
-                appointment.lastUpdate = Convert.ToDateTime(rdr["lastUpdate"]);
+                appointment.lastUpdate = Convert.ToDateTime(rdr["lastUpdate"]).ToLocalTime();
                 appointment.LastUpdatedBy = rdr["lastUpdateBy"].ToString();
 
             }
@@ -177,7 +177,7 @@ namespace JoshuaRea_SchedulingApplication
 
         public static void CreateAppointment(Appointment newAppointment)
         {
-            string currentTimestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            string currentTimestamp = DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss");
             string queryString = "INSERT INTO appointment " +
                 $"VALUES ('{newAppointment.appointmentId}', '{newAppointment.customerId}', '{newAppointment.userId}', '{newAppointment.title}', '{newAppointment.description}', '{newAppointment.location}', '{newAppointment.contact}', '{newAppointment.type}', '{newAppointment.URL}', '{newAppointment.start.ToString("yyyy-MM-dd HH:mm:ss")}', '{newAppointment.end.ToString("yyyy-MM-dd HH:mm:ss")}', '{currentTimestamp}', '{Login.currentUsername}', '{currentTimestamp}', '{Login.currentUsername}')";
             MySqlCommand cmd2 = new MySqlCommand(queryString, DBConnection.conn);
@@ -204,11 +204,14 @@ namespace JoshuaRea_SchedulingApplication
                 $"contact = '{appointment.contact}', " +
                 $"type = '{appointment.type}', " +
                 $"url = '{appointment.url}', " +
-                $"start = '{appointment.start}', " +
-                $"end = '{appointment.end}', " +
-                $"lastUpdate = '{appointment.lastUpdate.ToString("yyyy-MM-dd HH:mm:ss")}', " +
+                $"start = '{appointment.start.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss")}', " +
+                $"end = '{appointment.end.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss")}', " +
+                $"lastUpdate = '{DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss")}', " +
                 $"lastUpdateBy = '{Login.currentUsername}'" +
                 $"WHERE appointmentId = '{appointment.appointmentId}';";
+
+            MySqlCommand cmd = new MySqlCommand(query, DBConnection.conn);
+            cmd.ExecuteNonQuery();
         }
     }
 }

@@ -92,7 +92,7 @@ namespace JoshuaRea_SchedulingApplication
 
         public static void CreateCustomer(Customer newCustomer)
         {
-            string currentTimestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            string currentTimestamp = DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss");
             string queryString = "INSERT INTO Customer " +
                 $"VALUES ('{newCustomer.customerId}', '{newCustomer.customerName}', '{newCustomer.addressId}', '{newCustomer.active}', '{currentTimestamp}', '{Login.currentUsername}', '{currentTimestamp}', '{Login.currentUsername}')";
             MySqlCommand cmd2 = new MySqlCommand(queryString, DBConnection.conn);
@@ -134,14 +134,14 @@ namespace JoshuaRea_SchedulingApplication
 
             while (rdr.Read())
             {
-                customer.customerId = Convert.ToInt32(rdr[0]);
-                customer.customerName = rdr[1].ToString();
-                customer.addressId = Convert.ToInt32(rdr[2]);
-                customer.active = Convert.ToInt32(rdr[3]);
-                customer.createDate = Convert.ToDateTime(rdr[4]);
-                customer.createdBy = rdr[5].ToString();
-                customer.lastUpdate = Convert.ToDateTime(rdr[6]);
-                customer.lastUpdatedBy = rdr[7].ToString();
+                customer.customerId = Convert.ToInt32(rdr["customerId"]);
+                customer.customerName = rdr["customerName"].ToString();
+                customer.addressId = Convert.ToInt32(rdr["addressId"]);
+                customer.active = Convert.ToInt32(rdr["active"]);
+                customer.createDate = Convert.ToDateTime(rdr["createDate"]).ToLocalTime();
+                customer.createdBy = rdr["createdBy"].ToString();
+                customer.lastUpdate = Convert.ToDateTime(rdr["lastUpdate"]).ToLocalTime();
+                customer.lastUpdatedBy = rdr["lastUpdateBy"].ToString();
             }
             rdr.Close();
 
@@ -155,7 +155,7 @@ namespace JoshuaRea_SchedulingApplication
                 $"customerName = '{updatedCustomer.customerName}', " +
                 $"addressId = '{updatedCustomer.addressId}', " +
                 $"active = '{updatedCustomer.active}', " +
-                $"lastUpdate = '{updatedCustomer.lastUpdate.ToString("yyyy-MM-dd HH:mm:ss")}', " +
+                $"lastUpdate = '{updatedCustomer.lastUpdate.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss")}', " +
                 $"lastUpdateBy = '{Login.currentUsername}'" +
                 $"WHERE customerId = '{updatedCustomer.customerId}';";
 

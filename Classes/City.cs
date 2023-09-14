@@ -102,7 +102,7 @@ namespace JoshuaRea_SchedulingApplication.Classes
                 //Create New City if it doesn't exist
 
                 //Get a current Timestamp
-                string currentTimestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                string currentTimestamp = DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss");
 
                 //Assign CityId to class
                 GetNewCityID(city);
@@ -145,9 +145,9 @@ namespace JoshuaRea_SchedulingApplication.Classes
                 city.cityId = Convert.ToInt32(rdr["cityId"]);
                 city.city = rdr["city"].ToString();
                 city.countryId = Convert.ToInt32(rdr["countryId"]);
-                city.createDate = Convert.ToDateTime(rdr["createDate"]);
+                city.createDate = Convert.ToDateTime(rdr["createDate"]).ToLocalTime();
                 city.createdBy = rdr["createdBy"].ToString();
-                city.lastUpdate = Convert.ToDateTime(rdr["lastUpdate"]);
+                city.lastUpdate = Convert.ToDateTime(rdr["lastUpdate"]).ToLocalTime();
                 city.lastUpdatedBy = rdr["lastUpdateBy"].ToString();
             }
             rdr.Close();

@@ -107,8 +107,9 @@ namespace JoshuaRea_SchedulingApplication.Forms
             newAppointment.Contact = txtContact.Text;
             newAppointment.Type = txtType.Text;
             newAppointment.URL = txtURL.Text;
-            newAppointment.Start = dateStart.Value;
-            newAppointment.End = dateEnd.Value;
+            newAppointment.Start = dateStart.Value.ToUniversalTime();
+            newAppointment.End = dateEnd.Value.ToUniversalTime();
+
 
             Appointment.CreateAppointment(newAppointment);
 
@@ -117,5 +118,9 @@ namespace JoshuaRea_SchedulingApplication.Forms
             this.Close();
         }
 
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

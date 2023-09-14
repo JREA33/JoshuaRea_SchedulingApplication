@@ -109,6 +109,8 @@ namespace JoshuaRea_SchedulingApplication
                 user.lastUpdatedBy = rdr["lastUpdateBy"].ToString();
             }
 
+            rdr.Close();
+
             return user;
         }
     }

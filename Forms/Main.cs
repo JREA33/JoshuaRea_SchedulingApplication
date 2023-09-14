@@ -43,6 +43,7 @@ namespace JoshuaRea_SchedulingApplication
 
 
         //Method to Populate dgvCustomers
+
         public static DataTable getCustomers()
         {
             string sqlString = 
@@ -60,13 +61,29 @@ namespace JoshuaRea_SchedulingApplication
             return customerData;
         }
 
-        //Method to Populate dgvAppointments
+        //Methods to Populate dgvAppointments
+
         public static DataTable getAllAppointments()
         {
             string sqlString = "SELECT * FROM appointment;";
             MySqlCommand cmd = new MySqlCommand(sqlString, DBConnection.conn);
             MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
             adapter.Fill(appointmentData);
+
+            for (int i = 0; i < appointmentData.Rows.Count; i++)
+            {
+                DateTime start = (DateTime)appointmentData.Rows[i]["start"];
+                appointmentData.Rows[i]["start"] = start.ToLocalTime();
+
+                DateTime end = (DateTime)appointmentData.Rows[i]["end"];
+                appointmentData.Rows[i]["end"] = end.ToLocalTime();
+
+                DateTime createDate = (DateTime)appointmentData.Rows[i]["createDate"];
+                appointmentData.Rows[i]["createDate"] = createDate.ToLocalTime();
+
+                DateTime lastUpdate = (DateTime)appointmentData.Rows[i]["lastUpdate"];
+                appointmentData.Rows[i]["lastUpdate"] = lastUpdate.ToLocalTime();
+            }
             return appointmentData;
         }
 
@@ -78,6 +95,22 @@ namespace JoshuaRea_SchedulingApplication
             MySqlCommand cmd = new MySqlCommand(sqlString, DBConnection.conn);
             MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
             adapter.Fill(appointmentData);
+
+            for (int i = 0; i < appointmentData.Rows.Count; i++)
+            {
+                DateTime start = (DateTime)appointmentData.Rows[i]["start"];
+                appointmentData.Rows[i]["start"] = start.ToLocalTime();
+
+                DateTime end = (DateTime)appointmentData.Rows[i]["end"];
+                appointmentData.Rows[i]["end"] = end.ToLocalTime();
+
+                DateTime createDate = (DateTime)appointmentData.Rows[i]["createDate"];
+                appointmentData.Rows[i]["createDate"] = createDate.ToLocalTime();
+
+                DateTime lastUpdate = (DateTime)appointmentData.Rows[i]["lastUpdate"];
+                appointmentData.Rows[i]["lastUpdate"] = lastUpdate.ToLocalTime();
+            }
+
             return appointmentData;
         }
 
@@ -89,38 +122,30 @@ namespace JoshuaRea_SchedulingApplication
             MySqlCommand cmd = new MySqlCommand(sqlString, DBConnection.conn);
             MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
             adapter.Fill(appointmentData);
+
+            for (int i = 0; i < appointmentData.Rows.Count; i++)
+            {
+                DateTime start = (DateTime)appointmentData.Rows[i]["start"];
+                appointmentData.Rows[i]["start"] = start.ToLocalTime();
+
+                DateTime end = (DateTime)appointmentData.Rows[i]["end"];
+                appointmentData.Rows[i]["end"] = end.ToLocalTime();
+
+                DateTime createDate = (DateTime)appointmentData.Rows[i]["createDate"];
+                appointmentData.Rows[i]["createDate"] = createDate.ToLocalTime();
+
+                DateTime lastUpdate = (DateTime)appointmentData.Rows[i]["lastUpdate"];
+                appointmentData.Rows[i]["lastUpdate"] = lastUpdate.ToLocalTime();
+            }
+
             return appointmentData;
         }
 
-        //Method for clicking Add Customer Button
+        //Methods for Clicking Customer buttons
 
         private void btnAddCustomer_Click(object sender, EventArgs e)
         {
             new AddCustomer().ShowDialog();
-        }
-
-        //Method for clicking Delete Customer Button
-
-        private void btnDeleteCustomer_Click(object sender, EventArgs e)
-        {
-            int rowId = Convert.ToInt32(dgvCustomers.CurrentRow.Cells[0].Value);
-            Customer.DeleteCustomer(rowId);
-            RefreshCustomerGrid();
-        }
-        
-        //Method to refresh Customer DataGridView
-
-        public void RefreshCustomerGrid()
-        {
-            customerData.Clear();
-            dgvCustomers.DataSource = getCustomers();
-        }
-
-        public void RefreshAppointments()
-        {
-            appointmentData.Clear();
-            dgvAppointments.DataSource = getAllAppointments();
-            rbAllAppointments.Checked = true;
         }
 
         private void btnUpdateCustomer_Click(object sender, EventArgs e)
@@ -137,6 +162,42 @@ namespace JoshuaRea_SchedulingApplication
 
             new UpdateCustomer(currentCustomer, currentAddress, currentCity, currentCountry).ShowDialog();
         }
+
+        private void btnDeleteCustomer_Click(object sender, EventArgs e)
+        {
+            int rowId = Convert.ToInt32(dgvCustomers.CurrentRow.Cells[0].Value);
+            Customer.DeleteCustomer(rowId);
+            RefreshCustomerGrid();
+        }
+        
+        //Method to refresh Customer DataGridView
+
+        public void RefreshCustomerGrid()
+        {
+            customerData.Clear();
+            dgvCustomers.DataSource = getCustomers();
+        }
+
+        //Methods for clicking appointment buttons
+
+        private void btnAddAppointment_Click(object sender, EventArgs e)
+        {
+            new AddAppointment().ShowDialog();
+        }
+
+        private void btnUpdateAppointment_Click(object sender, EventArgs e)
+        {
+            Appointment appointment = Appointment.GetAppointment(Convert.ToInt32(dgvAppointments.CurrentRow.Cells["appointmentId"].Value));
+            new UpdateAppointment(appointment).ShowDialog();
+        }
+
+        private void btnDeleteAppointment_Click(object sender, EventArgs e)
+        {
+            Appointment.DeleteAppointment(Convert.ToInt32(dgvAppointments.CurrentRow.Cells["appointmentId"].Value));
+            RefreshAppointments();
+        }
+
+        //Methods to change appointment view by all, month, or week
 
         private void rbAllAppointments_CheckedChanged(object sender, EventArgs e)
         {
@@ -155,21 +216,24 @@ namespace JoshuaRea_SchedulingApplication
             dgvAppointments.DataSource = getWeeksAppointments();
         }
 
-        private void btnAddAppointment_Click(object sender, EventArgs e)
-        {
-            new AddAppointment().ShowDialog();
-        }
+        //Method to refresh appointment grid
 
-        private void btnDeleteAppointment_Click(object sender, EventArgs e)
+        public void RefreshAppointments()
         {
-            Appointment.DeleteAppointment(Convert.ToInt32(dgvAppointments.CurrentRow.Cells["appointmentId"].Value));
-            RefreshAppointments();
-        }
+            appointmentData.Clear();
 
-        private void btnUpdateAppointment_Click(object sender, EventArgs e)
-        {
-            Appointment appointment = Appointment.GetAppointment(Convert.ToInt32(dgvAppointments.CurrentRow.Cells["appointmentId"].Value));
-            new UpdateAppointment(appointment).ShowDialog();
+            if (rbAllAppointments.Checked == true)
+            {
+                dgvAppointments.DataSource = getAllAppointments();
+            }
+            if (rbMonth.Checked == true)
+            {
+                dgvAppointments.DataSource = getMonthsAppointments();
+            }
+            if (rbWeek.Checked == true)
+            {
+                dgvAppointments.DataSource = getWeeksAppointments();
+            }
         }
     }
 }

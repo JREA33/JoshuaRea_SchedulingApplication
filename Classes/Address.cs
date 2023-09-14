@@ -130,9 +130,9 @@ namespace JoshuaRea_SchedulingApplication
                 newAddress.cityId = Convert.ToInt32(rdr["cityId"]);
                 newAddress.postalCode = rdr["postalCode"].ToString();
                 newAddress.phone = rdr["phone"].ToString();
-                newAddress.createDate = Convert.ToDateTime(rdr["createDate"]);
+                newAddress.createDate = Convert.ToDateTime(rdr["createDate"]).ToLocalTime();
                 newAddress.createdBy = rdr["createdBy"].ToString();
-                newAddress.lastUpdate = Convert.ToDateTime(rdr["lastUpdate"]);
+                newAddress.lastUpdate = Convert.ToDateTime(rdr["lastUpdate"]).ToLocalTime();
                 newAddress.lastUpdatedBy = rdr["lastUpdateBy"].ToString();
 
             }
@@ -140,7 +140,7 @@ namespace JoshuaRea_SchedulingApplication
 
             if (addressExists == false)
             {
-                string currentTimestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                string currentTimestamp = DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss");
                 newAddress = GetNewAddressID(newAddress);
                 string queryString = "INSERT INTO address " + 
                     $"VALUES ('{newAddress.addressId}', '{newAddress.address}', '{newAddress.address2}', '{newAddress.cityId}', '{newAddress.postalCode}', '{newAddress.phone}', '{currentTimestamp}', '{Login.currentUsername}', '{currentTimestamp}', '{Login.currentUsername}')";
@@ -181,9 +181,9 @@ namespace JoshuaRea_SchedulingApplication
                 currentAddress.cityId = Convert.ToInt32(rdr["cityId"]);
                 currentAddress.postalCode = rdr["postalCode"].ToString();
                 currentAddress.phone = rdr["phone"].ToString();
-                currentAddress.createDate = Convert.ToDateTime(rdr["createDate"]);
+                currentAddress.createDate = Convert.ToDateTime(rdr["createDate"]).ToLocalTime();
                 currentAddress.createdBy = rdr["createdBy"].ToString();
-                currentAddress.lastUpdate = Convert.ToDateTime(rdr["lastUpdate"]);
+                currentAddress.lastUpdate = Convert.ToDateTime(rdr["lastUpdate"]).ToLocalTime();
                 currentAddress.lastUpdatedBy = rdr["lastUpdateBy"].ToString();
             }
             rdr.Close();
